@@ -1,0 +1,79 @@
+{% extends "base.html" %} {% block start %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Class-Mate</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login_page' %}">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'signup_page' %}">Sign Up</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero-section text-center py-5 bg-light">
+  <div class="container">
+    <h1>Welcome to Class-Mate</h1>
+    <p class="lead">Enhance Your Learning Experience</p>
+    <p>
+      Join Class-Mate to create or join classes, manage assignments, conduct
+      exams, and much more. Let's make education more interactive and fun!
+    </p>
+  </div>
+</section>
+
+<section class="text-center py-5">
+  <div class="container">
+    <h3>Features</h3>
+    <p>
+      <strong>Class Management:</strong> Create and join classes easily. Manage
+      your class schedules and announcements in one place.
+    </p>
+    <p>
+      <strong>Exam Management:</strong> Create, schedule, and grade exams with
+      ease. Automated grading for objective questions.
+    </p>
+    <p>
+      <strong>Assignments:</strong> Submit and manage assignments. Receive
+      feedback and track your academic progress.
+    </p>
+    <p>
+      <strong>Performance Reports:</strong> Generate detailed reports on student
+      performance. Track progress and identify areas for improvement.
+    </p>
+    <p>
+      <strong>Communication:</strong> Engage with teachers and peers through
+      discussion forums and announcements.
+    </p>
+    <p>
+      <strong>Resource Sharing:</strong> Share study materials, links, and
+      resources within your class. Enhance collaborative learning.
+    </p>
+  </div>
+</section>
+
+<section class="text-center py-5">
+  <h3>Ready to get started?</h3>
+  <a href="{% url 'login_page' %}" class="btn btn-primary btn-lg">Login</a>
+  <a href="{% url 'signup_page' %}" class="btn btn-secondary btn-lg">Sign Up</a>
+</section>
+
+<footer class="footer bg-dark text-white text-center py-3">
+  <p>© 2024 Class-Mate. All rights reserved.</p>
+</footer>
+
+{% endblock %}
