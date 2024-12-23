@@ -73,7 +73,7 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For questions or support, please contact [me](nh2826239@gmail.com).
+For questions or support, please contact [me](mailto:nh2826239@gmail.com).
 
 ---
 
