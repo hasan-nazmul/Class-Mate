@@ -2,12 +2,16 @@ from django.shortcuts import render, redirect
 from .models import CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
 
 # Create your views here.
 def landing_page(req):
     return render(req, 'landing.html')
 
 def login_page(req):
+    if req.user.is_authenticated:
+        return redirect('/home/')
+    
     if req.method == 'POST':
         username = req.POST.get('username')
         password = req.POST.get('password')
@@ -31,6 +35,9 @@ def login_page(req):
     return render(req, 'login.html')
 
 def signup_page(req):
+    if req.user.is_authenticated:
+        return redirect('/home/')
+    
     if req.method == 'POST':
         data = req.POST
         username = data.get('username')
@@ -72,3 +79,7 @@ def signup_page(req):
         return redirect('/login/')
 
     return render(req, 'signup.html')
+
+def logout_page(req):
+    logout(req)
+    return redirect('/')

@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from UserHandler.views import *
 from Home.views import *
+from ClassroomHandler.views import *
 
 urlpatterns = [
     path('', landing_page, name='landing_page'),
     path('login/', login_page, name='login_page'),
+    path('logout/', logout_page, name='logout_page'),
     path('signup/', signup_page, name='signup_page'),
     path('home/', home, name='home'),
     path('admin/', admin.site.urls),
