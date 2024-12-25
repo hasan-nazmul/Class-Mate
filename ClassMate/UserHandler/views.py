@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from .models import CustomUser
+from .models import *
+from ClassroomHandler.models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
+from Home.seed import *
 
 # Create your views here.
 def landing_page(req):
@@ -30,6 +32,7 @@ def login_page(req):
         
         else:
             login(req, user)
+            TeachingDBInitializer(user)
             return redirect('/home/')
 
     return render(req, 'login.html')
@@ -82,4 +85,5 @@ def signup_page(req):
 
 def logout_page(req):
     logout(req)
+    Teaching.objects.all().delete()
     return redirect('/')

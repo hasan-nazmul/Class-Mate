@@ -94,8 +94,14 @@ body {
   color: white;
 }
 
+.modal-footer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .modal-footer .btn {
-  min-width: 100px;
+  min-width: 80px;
 }
 
 .class-card .card-footer {
