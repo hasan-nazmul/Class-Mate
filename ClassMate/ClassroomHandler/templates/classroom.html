@@ -1,0 +1,51 @@
+{% extends "base.html" %} 
+{% block title %} Classroom {% endblock %} 
+{% block start %}
+<div class="container mt-3">
+  <div class="card">
+    <img
+      src="/media/{{ classroom.cover_image }}"
+      style="width: 100%; height: 50%"
+      class="card-img img-fluid"
+      alt="Class Cover"
+      id="class-cover-image"
+    />
+    <div
+      class="card-img-overlay text-white d-flex flex-column justify-content-end"
+    >
+      <h2 class="card-title mb-0">{{classroom.class_name}}</h2>
+      {% if classroom.subject %}
+        <h5 class="card-text">{{classroom.subject}}</h5>
+      {% endif %}
+      {% if classroom.subject %}
+        <h5 class="card-text">{{classroom.section}}</h5>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <div class="mt-3 card mr-2 col col-lg-4">
+        <form class="card-body" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input name="cover_image" class="form-control-file" type="file" id="coverImageUpload" accept="image/*" />
+          <button type="submit" class="btn btn-primary btn-block mt-3">Update Cover</button>
+        </form>
+    </div>
+
+    <div class="mt-3 card col col-lg-8">
+      <form class="card-body" method="post" enctype="multipart/form-data">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Share something with your class..."
+        />
+        <button type="submit" class="btn btn-primary btn-block mt-3">Announce</button>
+      </form>
+    </div>
+    
+  </div>
+</div>
+
+
+{% endblock %}

@@ -19,12 +19,22 @@ from django.urls import path
 from UserHandler.views import *
 from Home.views import *
 from ClassroomHandler.views import *
+from django.conf.urls.static import static
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('', landing_page, name='landing_page'),
+    path('test/', test, name='test'),
     path('login/', login_page, name='login_page'),
     path('logout/', logout_page, name='logout_page'),
     path('signup/', signup_page, name='signup_page'),
     path('home/', home, name='home'),
+    path('classroom/<class_id>/', classroom, name='classroom'),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+urlpatterns += staticfiles_urlpatterns()
