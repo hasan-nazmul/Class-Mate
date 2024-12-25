@@ -4,49 +4,34 @@
 
 {% block start %}
 
-<div id="sidebar" class="sidebar">
-  <a href="#">Home</a>
-  <a href="#">Calendar</a>
-  <div class="toggle-menu" onclick="toggleNestedMenu('teachingMenu', this)">
-    Teaching <i class="fas fa-chevron-down"></i>
-  </div>
-  <div id="teachingMenu" class="nested-menu">
-    {% for classroom in Teaching %}
-    <a href="{% url 'classroom' classroom.teaching_class.class_id %}">{{classroom.teaching_class.class_name}}</a>
-    {% endfor %}
-  </div>
-  <div class="toggle-menu" onclick="toggleNestedMenu('enrolledMenu', this)">
-    Enrolled <i class="fas fa-chevron-down"></i>
-  </div>
-  <div id="enrolledMenu" class="nested-menu">
-    <a href="#">Software Engineering - 6DM</a>
-    <a href="#">Microprocessors, Microcontrollers, and Embedded Systems</a>
-    <a href="#">Bootcamp Spring '24</a>
-  </div>
-  <a href="#">To review</a>
-  <a href="#">Archived classes</a>
-  <a href="#">Settings</a>
-</div>
-
 <div class="container mt-3 d-flex flex-row flex-wrap p-0">
   {% for classroom in Teaching %}
   <div class="card text-white mr-3 mb-3">
     <div class="position-relative">
+      {% if classroom.teaching_class.cover_image %}
       <img
         src="/media/{{ classroom.teaching_class.cover_image }}"
         class="card-img"
-        style="width: 400px; height: 250px"
+        style="width: 350px; height: 200px"
         alt="Class Cover"
       />
+      {% else %}
+      <img
+        src="/media/classroom_covers/default_cover.jpg"
+        class="card-img"
+        style="width: 350px; height: 200px"
+        alt="Class Cover"
+      />
+      {% endif %}
       <div class="card-img-overlay d-flex flex-column justify-content-end">
-        <h5 class="card-title"><a href="{% url 'classroom' classroom.teaching_class.class_id %}">{{classroom.teaching_class.class_name}}</a></h5>
+        <h5 class="card-title"><a href="{% url 'classroom' classroom.teaching_class.class_id %}" class="text-decoration-none text-white">{{classroom.teaching_class.class_name}}</a></h5>
         <p class="card-text">{{classroom.teaching_class.section}}</p>
         <p class="card-text mb-0">
           {{classroom.teacher.first_name}}&nbsp;{{classroom.teacher.last_name}}
         </p>
         <div class="d-flex align-items-center justify-content-end mt-auto">
           <img
-            src="https://via.placeholder.com/50"
+            src="https://via.placeholder.com/70"
             class="rounded-circle mr-2"
             alt="Instructor Profile"
           />

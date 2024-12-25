@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>{% block title %}Base{% endblock %}</title>
-    <link rel="stylesheet" href="{% static '/css/homepage.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}" />
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -42,36 +42,33 @@
           </div>
         </div>
       </nav>
+      <div id="sidebar" class="sidebar">
+        <a href="/home/" class="text-decoration-none">Home</a>
+        <a href="#" class="text-decoration-none">Calendar</a>
+        <div class="toggle-menu" onclick="toggleNestedMenu('teachingMenu', this)">
+          Teaching <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="teachingMenu" class="nested-menu">
+          {% for classroom in Teaching %}
+          <a href="{% url 'classroom' classroom.teaching_class.class_id %}" class="text-decoration-none">{{classroom.teaching_class.class_name}}</a>
+          {% endfor %}
+        </div>
+        <div class="toggle-menu" onclick="toggleNestedMenu('enrolledMenu', this)">
+          Enrolled <i class="fas fa-chevron-down"></i>
+        </div>
+        <div id="enrolledMenu" class="nested-menu">
+          <a href="#" class="text-decoration-none">Software Engineering - 6DM</a>
+          <a href="#" class="text-decoration-none">Microprocessors, Microcontrollers, and Embedded Systems</a>
+          <a href="#" class="text-decoration-none">Bootcamp Spring '24</a>
+        </div>
+        <a href="#" class="text-decoration-none">To review</a>
+        <a href="#" class="text-decoration-none">Archived classes</a>
+        <a href="#" class="text-decoration-none">Settings</a>
+      </div>
     {% endif %}
     {% block start %}{% endblock %}
-    <script>
-      function toggleSidebar() {
-        var sidebar = document.getElementById('sidebar');
-        if (sidebar.style.left === '0px') {
-          sidebar.style.left = '-250px';
-        } else {
-          sidebar.style.left = '0px';
-        }
-      }
-
-      function toggleNestedMenu(menuId, element) {
-        var nestedMenu = document.getElementById(menuId);
-        var icon = element.querySelector('i');
-        if (nestedMenu.style.display === 'block') {
-          nestedMenu.style.display = 'none';
-          icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-        } else {
-          nestedMenu.style.display = 'block';
-          icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-        }
-      }
-
-      function openClassMenuModal() {
-        $('#classMenuModal').modal('show');
-        console.log('clicked');
-      }
-    </script>
-
+    
+    <script src="{% static 'js/app.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
