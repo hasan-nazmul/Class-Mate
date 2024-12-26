@@ -3,6 +3,7 @@ from .models import *
 from ClassroomHandler.models import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from Home.seed import *
 
@@ -32,7 +33,7 @@ def login_page(req):
         
         else:
             login(req, user)
-            TeachingDBInitializer(user)
+            ClassroomDBInitializer(user)
             return redirect('/home/')
 
     return render(req, 'login.html')
@@ -83,7 +84,9 @@ def signup_page(req):
 
     return render(req, 'signup.html')
 
+@login_required(login_url='/login/')
 def logout_page(req):
-    logout(req)
     Teaching.objects.all().delete()
+    Enrolled.objects.all().delete()
+    logout(req)
     return redirect('/')

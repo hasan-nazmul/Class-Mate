@@ -29,3 +29,25 @@ class Teaching(models.Model):
     class Meta:
         unique_together = ['teaching_class', 'teacher']
         ordering = ['-teaching_class__created_at']
+
+
+class Enrollments(models.Model):
+    enrolled_class = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='enrolled')
+    student = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='student')
+    enrolled_name = models.CharField(max_length=100)
+    enrolled_id = models.CharField(max_length=100)
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ['enrolled_class', 'student']
+        ordering = ['-joined_at']
+
+    def __str__(self):
+        return f'{self.student.username}, {self.enrolled_class.class_name}'
+
+
+class Enrolled(models.Model):
+    enrolled_class = models.ForeignKey(Enrollments, on_delete=models.CASCADE, related_name='enrolled')
+
+    class Meta:
+        ordering = ['-enrolled_class__joined_at']

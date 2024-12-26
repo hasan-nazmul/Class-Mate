@@ -2,11 +2,18 @@ from UserHandler.models import *
 from ClassroomHandler.models import *
 
 
-def TeachingDBInitializer(user):
+def ClassroomDBInitializer(user):
     classrooms = Classroom.objects.filter(teacher__user_id=user.user_id)
 
     for classroom in classrooms:
         Teaching.objects.create(
             teaching_class = classroom,
             teacher = user
+        )
+
+    classrooms = Enrollments.objects.filter(student__user_id = user.user_id)
+
+    for classroom in classrooms:
+        Enrolled.objects.create(
+            enrolled_class = classroom
         )

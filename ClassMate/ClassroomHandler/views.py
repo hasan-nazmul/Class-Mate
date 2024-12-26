@@ -7,7 +7,13 @@ def test(req):
     return render(req, 'classroom.html')
 
 def classroom(req, class_id):
-    current_classroom = Teaching.objects.filter(teaching_class__class_id = class_id)[0].teaching_class
+    current_classroom = Teaching.objects.filter(teaching_class__class_id = class_id)
+
+    if not current_classroom:
+        current_classroom = Enrolled.objects.filter(enrolled_class__enrolled_class__class_id = class_id)[0].enrolled_class.enrolled_class
+
+    else:
+        current_classroom = current_classroom[0].teaching_class
     
     if req.method == 'POST':
         image = req.FILES.get('cover_image')

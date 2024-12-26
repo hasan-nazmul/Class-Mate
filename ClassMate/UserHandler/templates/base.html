@@ -57,9 +57,9 @@
           Enrolled <i class="fas fa-chevron-down"></i>
         </div>
         <div id="enrolledMenu" class="nested-menu">
-          <a href="#" class="text-decoration-none">Software Engineering - 6DM</a>
-          <a href="#" class="text-decoration-none">Microprocessors, Microcontrollers, and Embedded Systems</a>
-          <a href="#" class="text-decoration-none">Bootcamp Spring '24</a>
+          {% for classroom in Enrolled %}
+          <a href="{% url 'classroom' classroom.enrolled_class.enrolled_class.class_id %}" class="text-decoration-none">{{classroom.enrolled_class.enrolled_class.class_name}}</a>
+          {% endfor %}
         </div>
         <a href="#" class="text-decoration-none">To review</a>
         <a href="#" class="text-decoration-none">Archived classes</a>
