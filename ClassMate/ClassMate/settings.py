@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'UserHandler',
     'Home',
-    'ClassroomHandler'
+    'ClassroomHandler',
+    'ExamHandler'
 ]
 
 MIDDLEWARE = [

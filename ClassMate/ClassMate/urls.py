@@ -19,6 +19,7 @@ from django.urls import path
 from UserHandler.views import *
 from Home.views import *
 from ClassroomHandler.views import *
+from ExamHandler.views import *
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -31,6 +32,7 @@ urlpatterns = [
     path('signup/', signup_page, name='signup_page'),
     path('home/', home, name='home'),
     path('classroom/<class_id>/', classroom, name='classroom'),
+    path('examroom/<class_id>/', examroom, name='examroom'),
     path('admin/', admin.site.urls),
 ]
 

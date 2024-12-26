@@ -24,4 +24,4 @@ def classroom(req, class_id):
 
         return redirect(f'/classroom/{class_id}')
 
-    return render(req, 'classroom.html', context={'classroom': current_classroom, 'nav': True})
+    return render(req, 'classroom.html', context={'classroom': current_classroom})
