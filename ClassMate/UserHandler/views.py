@@ -88,5 +88,6 @@ def signup_page(req):
 def logout_page(req):
     Teaching.objects.all().delete()
     Enrolled.objects.all().delete()
+    Exams.objects.all().delete()
     logout(req)
     return redirect('/')

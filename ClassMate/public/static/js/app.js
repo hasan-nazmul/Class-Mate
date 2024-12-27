@@ -1,5 +1,5 @@
 function toggleSidebar() {
-    console.log('toggling')
+    // console.log('hello people')
     var sidebar = document.getElementById('sidebar');
     if (sidebar.style.left === '0px') {
         sidebar.style.left = '-250px';
@@ -22,5 +22,11 @@ function toggleNestedMenu(menuId, element) {
 
 function openClassMenuModal() {
     $('#classMenuModal').modal('show');
+    console.log('clicked');
+}
+
+function addOptions()
+{
+    // var element = document.getElementById('options')
     console.log('clicked');
 }

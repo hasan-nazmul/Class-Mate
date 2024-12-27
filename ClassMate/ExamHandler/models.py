@@ -41,3 +41,6 @@ class MCQ(Question):
 class Written(Question):
     answer_sheet = models.FileField(upload_to='documents/')
 
+
+class Exams(models.Model):
+    exam = models.ForeignKey(Examination, on_delete=models.CASCADE, related_name='exam')
