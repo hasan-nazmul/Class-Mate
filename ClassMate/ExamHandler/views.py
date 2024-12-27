@@ -6,12 +6,17 @@ from .models import *
 # Create your views here.
 def examroom(req, class_id):
 
-    current_classroom = Teaching.objects.filter(teaching_class__class_id = class_id)
+    current_classroom = CurrentClassroom.objects.all()[0]
 
-    if not current_classroom:
-        current_classroom = Enrolled.objects.filter(enrolled_class__enrolled_class__class_id = class_id)[0].enrolled_class.enrolled_class
+    return render(req, 'examroom.html', context={'classroom': current_classroom, 'navclassroom': True, 'class_id': class_id})
 
-    else:
-        current_classroom = current_classroom[0].teaching_class
+def create_exam(req, class_id):
+    current_classroom = CurrentClassroom.objects.all()[0]
 
-    return render(req, 'questionpaper.html', context={'classroom': current_classroom, 'navclassroom': True})
+    return render(req, 'createexam.html', context={'navclassroom': True, 'classroom': current_classroom})
+
+def set_question(req):
+
+    current_classroom = CurrentClassroom.objects.all()[0]
+
+    return render(req, 'questionpaper.html', context={'navclassroom': True, 'classroom': current_classroom})

@@ -22,6 +22,11 @@ class Classroom(models.Model):
         verbose_name_plural = 'Classrooms' 
         db_table = 'classroom_table' 
 
+
+class CurrentClassroom(models.Model):
+    current_classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='current_classroom')
+
+
 class Teaching(models.Model):
     teaching_class = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='teaching')
     teacher = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='teacher')

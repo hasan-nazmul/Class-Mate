@@ -9,6 +9,7 @@ from ClassroomHandler.models import *
 # Create your views here.
 @login_required(login_url='/login/')
 def home(req):
+    CurrentClassroom.objects.all().delete()
     if req.method == 'POST':
         data = req.POST
 
