@@ -33,6 +33,7 @@ urlpatterns = [
     path('home/', home, name='home'),
     path('classroom/<class_id>/', classroom, name='classroom'),
     path('examroom/<class_id>/', examroom, name='examroom'),
+    path('peoples/<class_id>/', peoples, name='peoples'),
     path('admin/', admin.site.urls),
 ]
 

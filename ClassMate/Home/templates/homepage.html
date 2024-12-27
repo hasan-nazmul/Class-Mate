@@ -3,6 +3,31 @@
 {% block title %}Home{% endblock %} 
 
 {% block start %}
+<div id="sidebar" class="sidebar">
+  <a href="/home/" class="text-decoration-none">Home</a>
+  <a href="#" class="text-decoration-none">Calendar</a>
+  <div class="toggle-menu" onclick="toggleNestedMenu('teachingMenu', this)">
+    Teaching 
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  <div id="teachingMenu" class="nested-menu">
+    {% for classroom in Teaching %}
+      <a href="{% url 'classroom' classroom.teaching_class.class_id %}" class="text-decoration-none">{{classroom.teaching_class.class_name}}</a>
+    {% endfor %}
+  </div>
+  <div class="toggle-menu" onclick="toggleNestedMenu('enrolledMenu', this)">
+    Enrolled 
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  <div id="enrolledMenu" class="nested-menu">
+    {% for classroom in Enrolled %}
+      <a href="{% url 'classroom' classroom.enrolled_class.enrolled_class.class_id %}" class="text-decoration-none">{{classroom.enrolled_class.enrolled_class.class_name}}</a>
+    {% endfor %}
+  </div>
+  <a href="#" class="text-decoration-none">To review</a>
+  <a href="#" class="text-decoration-none">Archived classes</a>
+  <a href="#" class="text-decoration-none">Settings</a>
+</div>
 
 <div class="container mt-3 d-flex flex-row flex-wrap p-0">
   {% for classroom in Teaching %}

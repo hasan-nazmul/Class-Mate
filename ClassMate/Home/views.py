@@ -61,4 +61,4 @@ def home(req):
         
         return redirect('/home/')
 
-    return render(req, 'homepage.html', context={'Teaching': Teaching.objects.all(), 'Enrolled': Enrolled.objects.all(), 'nav': True})
+    return render(req, 'homepage.html', context={'Teaching': Teaching.objects.all(), 'Enrolled': Enrolled.objects.all(), 'navhome': True})
