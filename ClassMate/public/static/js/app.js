@@ -25,8 +25,20 @@ function openClassMenuModal() {
     console.log('clicked');
 }
 
+function createCounter() {
+    
+    let count = 0; // This acts like a static variable
+
+    return function() {
+        count++;
+        return count;
+    }
+}
+
+const counter = createCounter();
+
 function addOptions()
 {
-    // var element = document.getElementById('options')
-    console.log('clicked');
+    var element = document.getElementById('options')
+    element.innerHTML += `<input class="form-control mb-2" type="text" name="option" placeholder="Option ${counter()}" aria-label="default input example">`
 }

@@ -6,49 +6,32 @@
 
 <div class="container-sm mt-5">
 
-    <form>
-        
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
         <div class="mb-3">
-            <input class="form-control" type="text" placeholder="Question" aria-label="default input example">
+            <input class="form-control" type="text" placeholder="Question" name="question" aria-label="default input example">
         </div>
 
         <div class="mb-3">
             <label for="formFile" class="form-label">Upload Image</label>
-            <input class="form-control" type="file" id="formFile">
+            <input class="form-control" name="question_image" type="file" id="formFile">
         </div>
         
         <div class="mb-3 options" id="options">
             <div class="mb-3">
-            <input class="form-control" type="number" placeholder="Marks" aria-label="default input example">
+            <input class="form-control" type="number" placeholder="Marks" name="question_fullmarks" aria-label="default input example">
         </div>
         </div>
         <button type="button" class="btn btn-primary btn-sm" onclick="addOptions()">Add Options +</button>
         <hr>
         <div>
-            <button type="submit" class="btn btn-block btn-outline-primary">Add Question +</button>
-            <button type="submit" class="btn btn-block btn-outline-success">Submit</button>
+            <button type="submit" value="add_question" class="btn btn-block btn-outline-primary">Add Question +</button>
+            <button type="submit" value="submit" class="btn btn-block btn-outline-success">Submit</button>
         </div>
     </form>
 
 </div>
 
-<script>
-    function createCounter() {
-    
-        let count = 0; // This acts like a static variable
 
-        return function() {
-            count++;
-            return count;
-        }
-    }
-
-    const counter = createCounter();
-
-    function addOptions()
-    {
-        var element = document.getElementById('options')
-        element.innerHTML += `<input class="form-control mb-2" type="text" placeholder="Option ${counter()}" aria-label="default input example">`
-    }
-</script>
 {% endblock %}

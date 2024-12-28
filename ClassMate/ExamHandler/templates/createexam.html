@@ -6,32 +6,33 @@
 
 <div class="container-sm mt-5">
 
-    <form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
         <div class="mb-3">
-            <input class="form-control" type="text" placeholder="Exam Title" aria-label="default input example">
+            <input class="form-control" type="text" placeholder="Exam Title" name="exam_title" aria-label="default input example" required>
         </div>
         <div class="mb-3">
-            <textarea class="form-control" id="instruction" rows="3" placeholder="Enter Instructions"></textarea> 
+            <textarea class="form-control" id="instruction" rows="3" placeholder="Enter Instructions" name="instructions"></textarea> 
         </div>
         <div class="mb-3">
             <label for="eventDateTime">Starting Time:</label>
-            <input type="datetime-local" class="form-control">
+            <input type="datetime-local" name="starting_time" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="eventDateTime">Ending Time:</label>
-            <input type="datetime-local" class="form-control">
+            <input type="datetime-local" name="ending_time" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="eventDateTime">Duration Hours:</label>
-            <input type="number" class="form-control">
+            <input type="number" name="duration_hours" class="form-control">
         </div>
         <div class="mb-3">
             <label for="eventDateTime">Duration Mintutes:</label>
-            <input type="number" class="form-control">
+            <input type="number" name="duration_minutes" class="form-control">
         </div>
         <div class="mb-3">
             <label for="eventDateTime">Duration Seconds:</label>
-            <input type="number" class="form-control">
+            <input type="number" name="duration_seconds" class="form-control">
         </div>
         <div class="form-group d-flex justify-content-center">
             <button type="submit" class="btn btn-outline-primary">Proceed</button>
