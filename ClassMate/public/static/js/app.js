@@ -39,6 +39,9 @@ const counter = createCounter();
 
 function addOptions()
 {
+    var count = counter()
     var element = document.getElementById('options')
-    element.innerHTML += `<input class="form-control mb-2" type="text" name="option" placeholder="Option ${counter()}" aria-label="default input example">`
+    element.innerHTML += `<input class="form-control mb-2" type="text" name="option" placeholder="Option ${count}" aria-label="default input example">`
+    element = document.getElementById('answer')
+    element.innerHTML += `<option value="${count}">${count}</option>`
 }

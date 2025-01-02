@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+<!-- {% extends "base.html" %} 
 
 {% block title %}Home{% endblock %} 
 
@@ -11,8 +11,10 @@
     <i class="fas fa-chevron-down"></i>
   </div>
   <div id="teachingMenu" class="nested-menu">
-    {% for classroom in Teaching %}
-      <a href="{% url 'classroom' classroom.teaching_class.class_id %}" class="text-decoration-none">{{classroom.teaching_class.class_name}}</a>
+    {% for class_id, classroom in Teaching %}
+      <a href="{% url 'classroom' class_id %}" class="text-decoration-none">
+        {{ classroom.class_name }}
+      </a>
     {% endfor %}
   </div>
   <div class="toggle-menu" onclick="toggleNestedMenu('enrolledMenu', this)">
@@ -20,8 +22,9 @@
     <i class="fas fa-chevron-down"></i>
   </div>
   <div id="enrolledMenu" class="nested-menu">
-    {% for classroom in Enrolled %}
-      <a href="{% url 'classroom' classroom.enrolled_class.enrolled_class.class_id %}" class="text-decoration-none">{{classroom.enrolled_class.enrolled_class.class_name}}</a>
+    {% for class_id, classroom in Enrolled %}
+      <a href="{% url 'classroom' class_id %}" class="text-decoration-none">
+        {{ classroom.class_name }}</a>
     {% endfor %}
   </div>
   <a href="#" class="text-decoration-none">To review</a>
@@ -30,29 +33,29 @@
 </div>
 
 <div class="container mt-3 d-flex flex-row flex-wrap p-0">
-  {% for classroom in Teaching %}
+  {% for class_id, classroom in Teaching %}
   <div class="card text-white mr-3 mb-3">
     <div class="position-relative">
-      {% if classroom.teaching_class.cover_image %}
-      <img
-        src="/media/{{ classroom.teaching_class.cover_image }}"
-        class="card-img"
-        style="width: 350px; height: 200px"
-        alt="Class Cover"
-      />
+      {% if classroom.cover_image %}
+        <img
+          src="/media/{{ classroom.cover_image }}"
+          class="card-img"
+          style="width: 350px; height: 200px"
+          alt="Class Cover"
+        />
       {% else %}
-      <img
-        src="/media/classroom_covers/default_cover.jpg"
-        class="card-img"
-        style="width: 350px; height: 200px"
-        alt="Class Cover"
-      />
+        <img
+          src="/media/classroom_covers/default_cover.jpg"
+          class="card-img"
+          style="width: 350px; height: 200px"
+          alt="Class Cover"
+        />
       {% endif %}
       <div class="card-img-overlay d-flex flex-column justify-content-end">
-        <h5 class="card-title"><a href="{% url 'classroom' classroom.teaching_class.class_id %}" class="text-decoration-none text-white">{{classroom.teaching_class.class_name}}</a></h5>
-        <p class="card-text">{{classroom.teaching_class.section}}</p>
+        <h5 class="card-title"><a href="{% url 'classroom' class_id %}" class="text-decoration-none text-white">{{ classroom.class_name }}</a></h5>
+        <p class="card-text">{{ classroom.section }}</p>
         <p class="card-text mb-0">
-          {{classroom.teacher.first_name}}&nbsp;{{classroom.teacher.last_name}}
+          {{ request.user.first_name }}&nbsp;{{ request.user.last_name }}
         </p>
         <div class="d-flex align-items-center justify-content-end mt-auto">
           <img
@@ -65,29 +68,29 @@
     </div>
   </div>
   {% endfor %}
-  {% for classroom in Enrolled %}
+  {% for class_id, classroom in Enrolled %}
   <div class="card text-white mr-3 mb-3">
     <div class="position-relative">
-      {% if classroom.enrolled_class.enrolled_class.cover_image %}
-      <img
-        src="/media/{{ classroom.enrolled_class.enrolled_class.cover_image }}"
-        class="card-img"
-        style="width: 350px; height: 200px"
-        alt="Class Cover"
-      />
+      {% if classroom.cover_image %}
+        <img
+          src="/media/{{ classroom.cover_image }}"
+          class="card-img"
+          style="width: 350px; height: 200px"
+          alt="Class Cover"
+        />
       {% else %}
-      <img
-        src="/media/classroom_covers/default_cover.jpg"
-        class="card-img"
-        style="width: 350px; height: 200px"
-        alt="Class Cover"
-      />
+        <img
+          src="/media/classroom_covers/default_cover.jpg"
+          class="card-img"
+          style="width: 350px; height: 200px"
+          alt="Class Cover"
+        />
       {% endif %}
       <div class="card-img-overlay d-flex flex-column justify-content-end">
-        <h5 class="card-title"><a href="{% url 'classroom' classroom.enrolled_class.enrolled_class.class_id %}" class="text-decoration-none text-white">{{classroom.enrolled_class.enrolled_class.class_name}}</a></h5>
-        <p class="card-text">{{classroom.enrolled_class.enrolled_class.section}}</p>
+        <h5 class="card-title"><a href="{% url 'classroom' class_id %}" class="text-decoration-none text-white">{{ classroom.class_name }}</a></h5>
+        <p class="card-text">{{ classroom.section }}</p>
         <p class="card-text mb-0">
-          {{classroom.enrolled_class.enrolled_class.teacher.first_name}}&nbsp;{{classroom.enrolled_class.enrolled_class.teacher.last_name}}
+          {{ classroom.teacher.first_name }}&nbsp;{{ classroom.teacher.last_name }}
         </p>
         <div class="d-flex align-items-center justify-content-end mt-auto">
           <img
@@ -133,8 +136,8 @@
       </div> 
       <div class="modal-body"> 
         <div class="tab-content" id="myTabContent"> 
-          <!-- Create Class Tab --> 
-           <div class="tab-pane fade show active" id="create-class" role="tabpanel" aria-labelledby="create-class-tab"> 
+
+          <div class="tab-pane fade show active" id="create-class" role="tabpanel" aria-labelledby="create-class-tab"> 
             <form class="col-6 mx-auto" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group"> 
@@ -156,8 +159,8 @@
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
               <button type="submit" class="btn btn-primary">Create</button> 
             </form> 
-          </div> 
-          <!-- Join Class Tab --> 
+          </div>
+
            <div class="tab-pane fade" id="join-class" role="tabpanel" aria-labelledby="join-class-tab"> 
             <form class="col-6 mx-auto" method="post" enctype="multipart/form-data"> 
               {% csrf_token %}
@@ -216,4 +219,4 @@
   </div>
 </div>
 
-{% endblock %}
+{% endblock %} -->

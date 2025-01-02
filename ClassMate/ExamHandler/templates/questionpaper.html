@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+<!-- {% extends "base.html" %}
 {% block title %}
     Examroom
 {% endblock %}
@@ -17,21 +17,32 @@
             <label for="formFile" class="form-label">Upload Image</label>
             <input class="form-control" name="question_image" type="file" id="formFile">
         </div>
-        
-        <div class="mb-3 options" id="options">
-            <div class="mb-3">
+
+        <div class="mb-3">
             <input class="form-control" type="number" placeholder="Marks" name="question_fullmarks" aria-label="default input example">
         </div>
+
+        <div class="mb-3 options" id="options">
         </div>
+        
         <button type="button" class="btn btn-primary btn-sm" onclick="addOptions()">Add Options +</button>
+        
+        <div class="mb-3">
+            <label for="answer">Answer:</label>
+            <select name="answer" id="answer" class="form-control">
+            </select>
+        </div>
+
         <hr>
+
+
         <div>
-            <button type="submit" value="add_question" class="btn btn-block btn-outline-primary">Add Question +</button>
-            <button type="submit" value="submit" class="btn btn-block btn-outline-success">Submit</button>
+            <button type="submit" name="add-question" value="add_question" class="btn btn-block btn-outline-primary">Add Question +</button>
+            <button type="submit" name="submit" value="submit" class="btn btn-block btn-outline-success">Submit</button>
         </div>
     </form>
 
 </div>
 
 
-{% endblock %}
+{% endblock %} -->

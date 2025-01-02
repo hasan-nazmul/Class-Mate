@@ -9,6 +9,9 @@ from Home.seed import *
 
 # Create your views here.
 def landing_page(req):
+    if req.user.is_authenticated:
+        return redirect('/home/')
+    
     return render(req, 'landing.html')
 
 def login_page(req):
@@ -86,8 +89,7 @@ def signup_page(req):
 
 @login_required(login_url='/login/')
 def logout_page(req):
-    Teaching.objects.all().delete()
-    Enrolled.objects.all().delete()
-    Exams.objects.all().delete()
+    teaching.flushdb()
+    enrolled.flushdb()
     logout(req)
     return redirect('/')

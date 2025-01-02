@@ -1,15 +1,18 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from UserHandler.models import *
 from ClassroomHandler.models import *
+from .seed import *
+import json
+import timeit
 
 # Create your views here.
 @login_required(login_url='/login/')
 def home(req):
-    CurrentClassroom.objects.all().delete()
+
     if req.method == 'POST':
         data = req.POST
 
@@ -17,12 +20,8 @@ def home(req):
         student_name = data.get('student_name')
         student_id = data.get('student_id')
 
-        # print(class_code)
-        # print(student_name)
-        # print(student_id)
-
         if class_code:
-            classroom = Classroom.objects.filter(class_id = class_code).first()
+            classroom = Classroom.objects.filter(class_id = class_code)[0]
 
             if not student_name:
                 student_name = req.user.first_name
@@ -30,16 +29,14 @@ def home(req):
                     student_name += ' ' + req.user.last_name 
 
             if classroom:
-                enrollment = Enrollments.objects.create(
+                enrollment = enrollment.objects.create(
                     enrolled_class = classroom,
                     student = req.user,
                     enrolled_name = student_name,
                     enrolled_id = student_id
                 )
 
-                Enrolled.objects.create(
-                    enrolled_class = enrollment
-                )
+                enrolled.set(str(class_code), classroom.to_json())
 
         else:
             class_name = data.get('class_name')
@@ -55,11 +52,15 @@ def home(req):
                 description = description
             )
 
-            Teaching.objects.create(
-                teaching_class = new_classroom,
-                teacher = req.user
-            )
+            teaching.set(str(new_classroom.class_id), new_classroom.to_json())
         
         return redirect('/home/')
 
-    return render(req, 'homepage.html', context={'Teaching': Teaching.objects.all(), 'Enrolled': Enrolled.objects.all(), 'navhome': True})
+    for class_id in teaching.scan_iter():
+        byte_data = teaching.get(class_id)
+        json_str = byte_data.decode('utf-8')
+        data_dict = json.loads(json_str)
+        
+        print(data_dict['class_name'])
+
+    return HttpResponse('<h1>Home Page</h1>')

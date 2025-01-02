@@ -49,33 +49,32 @@
       </nav>
 
     {% elif navhome %}
-    <nav class="navbar navbar-light bg-light sticky-top">
-  <span class="open-btn" onclick="toggleSidebar()">
-    <i class="fas fa-bars"></i>
-  </span>
-  <span class="navbar-brand mb-0 h1">Classmate</span>
-    <div class="dropdown">
-      <button
-        class="btn btn-secondary dropdown-toggle"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-      <i class="fas fa-user-circle"></i>
-        </button>
-          <div
-            class="dropdown-menu dropdown-menu-right"
-            aria-labelledby="dropdownMenuButton"
+      <nav class="navbar navbar-light bg-light sticky-top">
+        <span class="open-btn" onclick="toggleSidebar()">
+          <i class="fas fa-bars"></i>
+        </span>
+        <span class="navbar-brand mb-0 h1">Classmate</span>
+        <div class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
           >
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="{% url 'logout_page' %}">Logout</a>
-          </div>
-    </div>
-</nav>
-
-{% endif %}
+          <i class="fas fa-user-circle"></i>
+            </button>
+              <div
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="dropdownMenuButton"
+              >
+                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="{% url 'logout_page' %}">Logout</a>
+              </div>
+        </div>
+      </nav>
+    {% endif %}
     
     {% block start %}{% endblock %}
     

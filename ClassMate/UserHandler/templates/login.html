@@ -9,15 +9,15 @@
       <div class="card-body">
         <h3 class="text-center">Login to Class-Mate</h3>
         {% if messages %}
-        <ul class="messages">
-          <div class="alert alert-primary" role="alert">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-              {{ message }}
-            </li>
-            {% endfor %}
-          </div>
-        </ul>
+          <ul class="messages">
+            <div class="alert alert-primary" role="alert">
+              {% for message in messages %}
+              <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                {{ message }}
+              </li>
+              {% endfor %}
+            </div>
+          </ul>
         {% endif %}
         <form class="col-6 mx-auto" method="post" enctype="multipart/form-data">
           {% csrf_token %}
