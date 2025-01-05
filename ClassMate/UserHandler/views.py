@@ -25,13 +25,13 @@ def login_page(req):
         user = CustomUser.objects.filter(username=username)
 
         if not user.exists():
-            messages.info(req, "Invalid username!")
+            messages.warning(req, "Invalid username!")
             return redirect('/login/')
         
         user = authenticate(username=username, password=password)
 
         if user is None:
-            messages.info(req, "Wrong Password!")
+            messages.warning(req, "Wrong Password!")
             return redirect('/login/')
         
         else:
@@ -57,17 +57,17 @@ def signup_page(req):
         user = CustomUser.objects.filter(username=username)
 
         if user.exists():
-            messages.info(req, "Username already taken!")
+            messages.warning(req, "Username already taken!")
             return redirect('/signup/')
         
         user = CustomUser.objects.filter(email=email)
 
         if user.exists():
-            messages.info(req, "Email already taken!")
+            messages.warning(req, "Email already taken!")
             return redirect('/signup/')
         
         if password != confirm_password:
-            messages.info(req, "Passwords didn't match!")
+            messages.warning(req, "Passwords didn't match!")
             return redirect('/signup/')
 
         user = CustomUser.objects.create(
@@ -81,7 +81,7 @@ def signup_page(req):
 
         user.save()
 
-        messages.error(req, "Account created successfully!")
+        messages.success(req, "Account created successfully!")
 
         return redirect('/login/')
 

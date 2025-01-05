@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>{% block title %}Base{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/homepage.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
@@ -16,65 +16,6 @@
     />
   </head>
   <body>
-    {% if navclassroom %}
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <span class="navbar-brand mb-0 h1">Classmate</span>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/home/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'examroom' classroom.current_classroom.class_id %}">Examroom</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'peoples' classroom.current_classroom.class_id %}">
-                Peoples
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Marks</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-        </div>
-      </nav>
-
-    {% elif navhome %}
-      <nav class="navbar navbar-light bg-light sticky-top">
-        <span class="open-btn" onclick="toggleSidebar()">
-          <i class="fas fa-bars"></i>
-        </span>
-        <span class="navbar-brand mb-0 h1">Classmate</span>
-        <div class="dropdown">
-          <button
-            class="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-          <i class="fas fa-user-circle"></i>
-            </button>
-              <div
-                class="dropdown-menu dropdown-menu-right"
-                aria-labelledby="dropdownMenuButton"
-              >
-                <a class="dropdown-item" href="#">Profile</a>
-                <a class="dropdown-item" href="{% url 'logout_page' %}">Logout</a>
-              </div>
-        </div>
-      </nav>
-    {% endif %}
     
     {% block start %}{% endblock %}
     

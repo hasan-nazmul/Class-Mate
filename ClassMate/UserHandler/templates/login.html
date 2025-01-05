@@ -1,58 +1,80 @@
 {% extends "base.html" %} {% block start %}
 
-<div
-  class="container d-flex align-items-center justify-content-center"
-  style="min-height: 100vh"
->
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body">
-        <h3 class="text-center">Login to Class-Mate</h3>
-        {% if messages %}
-          <ul class="messages">
-            <div class="alert alert-primary" role="alert">
-              {% for message in messages %}
-              <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-                {{ message }}
-              </li>
-              {% endfor %}
-            </div>
-          </ul>
-        {% endif %}
-        <form class="col-6 mx-auto" method="post" enctype="multipart/form-data">
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <form method="post" enctype="multipart/form-data">
+          {% if messages  %}
+            {% for message in messages %}
+              {% if message.tags %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+              {% else %}
+                <div class="alert alert-primary" role="alert">
+                  {{ message }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
           {% csrf_token %}
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input
-              type="text"
-              class="form-control"
-              id="username"
-              name="username"
-              placeholder="Enter username"
-            />
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input type="text" name="username" required id="form3Example3" class="form-control form-control-lg"
+              placeholder="Enter your Username" />
+            
           </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="password"
-              placeholder="Enter password"
-            />
+
+          <div data-mdb-input-init class="form-outline mb-3">
+            <input type="password" name="password" required id="form3Example4" class="form-control form-control-lg"
+              placeholder="Enter password" />
+            
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Login</button>
-          <div class="text-center mt-3">
-            <p>
-              Don't have an account?
-              <a href="{% url 'signup_page' %}">Sign Up</a>
-            </p>
-            <p><a href="/forgot-password">Forgot Password?</a></p>
+
+          <div class="d-flex justify-content-end">
+            <a href="#!" class="text-body">Forgot password?</a>
           </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button  type="submit" class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+            <p class="fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="{% url 'signup_page' %}"
+                class="link-danger">Register</a></p>
+          </div>
+
         </form>
       </div>
     </div>
   </div>
-</div>
+  <div
+    class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
+    <!-- Copyright -->
+    <div class="text-white mb-3 mb-md-0">
+      Copyright © 2020. All rights reserved.
+    </div>
+    <!-- Copyright -->
+
+    <!-- Right -->
+    <div>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#!" class="text-white me-4">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="#!" class="text-white">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </div>
+</section>
 
 {% endblock %}

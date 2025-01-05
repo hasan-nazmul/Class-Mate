@@ -56,11 +56,22 @@ def home(req):
         
         return redirect('/home/')
 
+    Teaching = []
+
+    Enrolled = []
+
     for class_id in teaching.scan_iter():
         byte_data = teaching.get(class_id)
         json_str = byte_data.decode('utf-8')
         data_dict = json.loads(json_str)
-        
-        print(data_dict['class_name'])
+        Teaching.append(data_dict)
 
-    return HttpResponse('<h1>Home Page</h1>')
+    for class_id in enrolled.scan_iter():
+        byte_data = enrolled.get(class_id)
+        json_str = byte_data.decode('utf-8')
+        data_dict = json.loads(json_str)
+        Enrolled.append(data_dict)
+
+    
+
+    return render(req, 'homepage.html')
