@@ -3,20 +3,20 @@ from ClassroomHandler.models import *
 from ExamHandler.models import *
 from django.db.models import Q
 from redis import Redis
-import json
+from rest_framework.renderers import JSONRenderer
+from ClassroomHandler.serializers import *
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from django.http import HttpResponse, JsonResponse
 
 
-teaching = Redis(host="localhost", port=6379, db=1)
-enrolled = Redis(host="localhost", port=6379, db=2)
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 def ClassroomDBInitializer(user):
-    user_classrooms = Classroom.objects.filter(
+    classroom_queryset = Classroom.objects.filter(
         Q(instructor=user) | Q(students=user)
     )
-
-    for user_classroom in user_classrooms:
-        if user_classroom.instructor == user:
-            teaching.set(str(user_classroom.class_id), user_classroom.to_json())
-        else:
-            enrolled.set(str(user_classroom.class_id), user_classroom.to_json())
+    cache.set('classrooms', classroom_queryset)

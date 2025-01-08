@@ -89,7 +89,5 @@ def signup_page(req):
 
 @login_required(login_url='/login/')
 def logout_page(req):
-    teaching.flushdb()
-    enrolled.flushdb()
     logout(req)
     return redirect('/')

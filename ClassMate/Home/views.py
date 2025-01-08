@@ -1,18 +1,44 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from UserHandler.models import *
 from ClassroomHandler.models import *
 from .seed import *
-import json
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from ClassroomHandler.serializers import *
+from rest_framework.parsers import JSONParser
 import timeit
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
+def classroom_list(req):
+    if not cache.has_key('classrooms'):
+        ClassroomDBInitializer(req.user)
+    return cache.get('classrooms')
+
+
+def classroom_detail(req, class_id):
+    if req.method == 'GET': 
+        if not cache.has_key('classrooms'): 
+            ClassroomDBInitializer(req.user) 
+            
+        classrooms = cache.get('classrooms') 
+        classroom = None
+        for cls in classrooms:
+            if str(cls.class_id) == class_id:
+                classroom = ClassroomSerializer(cls)
+
+        return JsonResponse(classroom.data)
+
 
 # Create your views here.
 @login_required(login_url='/login/')
 def home(req):
-
     if req.method == 'POST':
         data = req.POST
 
@@ -35,9 +61,6 @@ def home(req):
                     enrolled_name = student_name,
                     enrolled_id = student_id
                 )
-
-                enrolled.set(str(class_code), classroom.to_json())
-
         else:
             class_name = data.get('class_name')
             subject = data.get('subject')
@@ -51,27 +74,12 @@ def home(req):
                 section = section,
                 description = description
             )
-
-            teaching.set(str(new_classroom.class_id), new_classroom.to_json())
         
         return redirect('/home/')
-
-    Teaching = []
-
-    Enrolled = []
-
-    for class_id in teaching.scan_iter():
-        byte_data = teaching.get(class_id)
-        json_str = byte_data.decode('utf-8')
-        data_dict = json.loads(json_str)
-        Teaching.append(data_dict)
-
-    for class_id in enrolled.scan_iter():
-        byte_data = enrolled.get(class_id)
-        json_str = byte_data.decode('utf-8')
-        data_dict = json.loads(json_str)
-        Enrolled.append(data_dict)
-
     
+    classrooms = classroom_list(req)
 
-    return render(req, 'homepage.html')
+    for classroom in classrooms:
+        print(classroom.cover_image)
+    
+    return render(req, 'homepage.html', context={'classrooms': classrooms})

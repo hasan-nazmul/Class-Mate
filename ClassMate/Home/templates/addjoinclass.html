@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block start %}
+
+<div class="container mt-5">
+        <h1 class="text-center mb-4">Class Management</h1>
+        <div class="btn-group d-flex mb-4" role="group">
+            <button id="toggleCreate" class="btn btn-primary w-50">Create Class</button>
+            <button id="toggleJoin" class="btn btn-outline-primary w-50">Join Class</button>
+        </div>
+
+        <!-- Create Class Form -->
+        <div id="createForm" class="card p-4">
+            <h3>Create Class</h3>
+            <form>
+                <div class="mb-3">
+                    <label for="className" class="form-label">Class Name</label>
+                    <input type="text" class="form-control" id="className" placeholder="Enter class name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="subjectName" class="form-label">Subject Name</label>
+                    <input type="text" class="form-control" id="subjectName" placeholder="Enter subject name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" rows="3" placeholder="Enter class description"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Create Class</button>
+                <button type="button" class="btn btn-secondary" onclick="resetForm('createForm')">Cancel</button>
+            </form>
+        </div>
+
+        <!-- Join Class Form -->
+        <div id="joinForm" class="card p-4 d-none">
+            <h3>Join Class</h3>
+            <form>
+                <div class="mb-3">
+                    <label for="classCode" class="form-label">Class Code</label>
+                    <input type="text" class="form-control" id="classCode" placeholder="Enter class code" required>
+                </div>
+                <div class="mb-3">
+                    <label for="studentName" class="form-label">Your Name</label>
+                    <input type="text" class="form-control" id="studentName" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="studentId" class="form-label">Your ID</label>
+                    <input type="text" class="form-control" id="studentId" placeholder="Enter your ID" required>
+                </div>
+                <button type="submit" class="btn btn-success">Join Class</button>
+                <button type="button" class="btn btn-secondary" onclick="resetForm('joinForm')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const toggleCreate = document.getElementById('toggleCreate');
+        const toggleJoin = document.getElementById('toggleJoin');
+        const createForm = document.getElementById('createForm');
+        const joinForm = document.getElementById('joinForm');
+
+        toggleCreate.addEventListener('click', () => {
+            createForm.classList.remove('d-none');
+            joinForm.classList.add('d-none');
+            toggleCreate.classList.add('btn-primary');
+            toggleCreate.classList.remove('btn-outline-primary');
+            toggleJoin.classList.add('btn-outline-primary');
+            toggleJoin.classList.remove('btn-primary');
+        });
+
+        toggleJoin.addEventListener('click', () => {
+            joinForm.classList.remove('d-none');
+            createForm.classList.add('d-none');
+            toggleJoin.classList.add('btn-primary');
+            toggleJoin.classList.remove('btn-outline-primary');
+            toggleCreate.classList.add('btn-outline-primary');
+            toggleCreate.classList.remove('btn-primary');
+        });
+
+        function resetForm(formId) {
+            const form = document.getElementById(formId).querySelector('form');
+            form.reset();
+        }
+    </script>
+{% endblock %}

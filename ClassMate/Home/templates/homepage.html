@@ -1,0 +1,129 @@
+{% extends "base.html" %} 
+{% block title %} Home Page {% endblock %} 
+
+{% block navigation %}
+{% endblock %} 
+{% block start %}
+
+<header class="header" id="header">
+    <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+    <div class="header_toggle">
+      <i class='bx bx-plus-circle'></i>
+    </div>
+  </header>
+  <div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+      <div>
+        <a href="#" class="nav_logo">
+          <i class="bx bx-layer nav_logo-icon"></i>
+          <span class="nav_logo-name">Classmate</span>
+        </a>
+        <div class="nav_list">
+          <a href="/home/" class="nav_link active">
+            <i class='bx bx-home-alt nav_icon' ></i>
+            <span class="nav_name">Home</span>
+          </a>
+          <a href="#" class="nav_link">
+            <i class='bx bxs-user-account nav_icon'></i>
+            <span class="nav_name">Profile</span>
+          </a>
+          <a href="#" class="nav_link">
+            <i class="bx bx-calendar nav_icon"></i>
+            <span class="nav_name">Calendar</span>
+          </a>
+          <a href="#" class="nav_link">
+            <i class='bx bx-chalkboard nav_icon'></i>
+            <span class="nav_name">Teaching</span>
+          </a>
+          <a href="#" class="nav_link">
+            <i class='bx bxs-graduation nav_icon'></i>
+            <span class="nav_name">Enrolled</span>
+          </a>
+          <a href="#" class="nav_link">
+            <i class='bx bx-cog nav_icon'></i>
+            <span class="nav_name">Settings</span>
+          </a>
+        </div>
+      </div>
+      <a href="/logout/" class="nav_link">
+        <i class="bx bx-log-out nav_icon"></i>
+        <span class="nav_name">SignOut</span>
+      </a>
+    </nav>
+  </div>
+  <!--Container Main start-->
+  <div class="height-100 bg-light d-flex flex-wrap">
+
+    {% for classroom in classrooms %}
+
+      <div class="card text-white mr-3 mb-3" style="width: 300px; height: 200px;">
+        <div class="position-relative">
+        <img
+          {% if classroom.cover_image %}
+            src="{{ classroom.cover_image }}"
+          {% else %}
+            src="media/classroom_covers/default.jpg"
+          {% endif %}
+          class="card-img"
+          style="width: 300px; height: 200px"
+          alt="Class Cover"
+        />
+        <div class="card-img-overlay d-flex flex-column justify-content-end">
+          <h5 class="card-title"><a href="#" class="text-decoration-none text-white">{{ classroom.class_name }}</a></h5>
+          <p class="card-text">class section</p>
+          <p class="card-text mb-0">
+            {{ classroom.instructor.first_name }}&nbsp;{{ classroom.instructor.last_name }}
+          </p>
+            <div class="d-flex align-items-center justify-content-end mt-auto">
+              <img
+                src="https://via.placeholder.com/70"
+                class="rounded-circle mr-2"
+                alt="Instructor Profile"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+    
+  </div>
+
+
+  <!--Container Main end-->
+  
+<style>
+    @media screen and (min-width: 768px) {
+        body {
+            margin: calc(var(--header-height) + 1rem) 0 0 0;
+            padding-left: calc(var(--nav-width) + 2rem);
+        }
+        .header {
+            height: calc(var(--header-height) + 1rem);
+            padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
+        }
+        .header_img {
+            width: 40px;
+            height: 40px;
+        }
+        .header_img img {
+            width: 45px;
+        }
+        .l-navbar {
+            left: 0;
+            padding: 1rem 1rem 0 0;
+        }
+        .show {
+            width: calc(var(--nav-width) + 156px);
+        }
+        .body-pd {
+            padding-left: calc(var(--nav-width) + 188px);
+        }
+    }
+</style>
+
+{% endblock %}
+{% block footer %}
+  
+{% endblock %}

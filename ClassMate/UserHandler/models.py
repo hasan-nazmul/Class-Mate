@@ -11,20 +11,6 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
 
 
-    def to_dict(self):
-        return {
-            'user_id': str(self.user_id),
-            'username': self.username,
-            'email': self.email,
-            'first_name': self.first_name,
-            'full_name': (str(self.first_name) + ' ' + str(self.last_name)) if self.last_name else str(self.first_name),
-            'date_joined': self.date_joined.isoformat(),
-            'last_login': self.last_login.isoformat() if self.last_login else None
-        }
-    
-    def to_json(self):
-        return json.dumps(self.to_dict())
-
     class Meta:
         db_table = 'CustomUserDB'
         ordering = ['date_joined']
