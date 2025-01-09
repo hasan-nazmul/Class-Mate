@@ -3,13 +3,14 @@
 
 {% block navigation %}
 {% endblock %} 
+
 {% block start %}
 
 <header class="header" id="header">
     <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-    <div class="header_toggle">
+    <a href="{% url 'createorjoinclassroom' %}" class="header_toggle">
       <i class='bx bx-plus-circle'></i>
-    </div>
+    </a>
   </header>
   <div class="l-navbar" id="nav-bar">
     <nav class="nav">
@@ -52,25 +53,28 @@
     </nav>
   </div>
   <!--Container Main start-->
+  
   <div class="height-100 bg-light d-flex flex-wrap">
-
     {% for classroom in classrooms %}
 
       <div class="card text-white mr-3 mb-3" style="width: 300px; height: 200px;">
         <div class="position-relative">
-        <img
           {% if classroom.cover_image %}
-            src="{{ classroom.cover_image }}"
+            <img src="{{classroom.cover_image}}"
+              class="card-img"
+              style="width: 300px; height: 200px"
+              alt="Class Cover"
+            />
           {% else %}
-            src="media/classroom_covers/default.jpg"
+            <img src="/media/classroom_covers/default-cover.jpg"
+              class="card-img"
+              style="width: 300px; height: 200px"
+              alt="Class Cover"
+            />
           {% endif %}
-          class="card-img"
-          style="width: 300px; height: 200px"
-          alt="Class Cover"
-        />
         <div class="card-img-overlay d-flex flex-column justify-content-end">
           <h5 class="card-title"><a href="#" class="text-decoration-none text-white">{{ classroom.class_name }}</a></h5>
-          <p class="card-text">class section</p>
+          <p class="card-text">{{ classroom.section }}</p>
           <p class="card-text mb-0">
             {{ classroom.instructor.first_name }}&nbsp;{{ classroom.instructor.last_name }}
           </p>
@@ -87,9 +91,88 @@
 
     {% endfor %}
 
-    
   </div>
 
+  <!-- Modal -->
+   <div class="modal fade"
+  id="createClassModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="createClassModalLabel"
+  aria-hidden="true"> 
+  <div class="modal-dialog" role="document"> 
+    <div class="modal-content"> 
+      <div class="modal-header bg-primary text-white btn-group btn-group-toggle"> 
+        <ul class="nav nav-tabs" id="myTab" role="presentation"> 
+          <li class="nav-item" role="presentation"> 
+            <a class="nav-link btn btn-secondary active" id="create-class-tab" data-toggle="tab" href="#create-class" role="tab" aria-controls="create-class" aria-selected="true">
+              Create Class
+            </a> 
+          </li> 
+          <li class="nav-item" role="presentation"> 
+            <a class="nav-link btn btn-secondary" id="join-class-tab" data-toggle="tab" href="#join-class" role="tab" aria-controls="join-class" aria-selected="false">
+              Join Class
+            </a> 
+          </li> 
+        </ul> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+          <span aria-hidden="true">&times;</span> 
+        </button> 
+      </div> 
+      <div class="modal-body"> 
+        <div class="tab-content" id="myTabContent"> 
+          <!-- Create Class Tab --> 
+           <div class="tab-pane fade show active" id="create-class" role="tabpanel" aria-labelledby="create-class-tab"> 
+            <form class="col-6 mx-auto" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="form-group"> 
+                <label for="className">Class name</label> 
+                <input type="text" name="class_name" class="form-control" id="className" placeholder="Enter class name"> 
+              </div> 
+              <div class="form-group"> 
+                <label for="subject">Subject</label> 
+                <input type="text" name="subject" class="form-control" id="subject" placeholder="Enter subject"> 
+              </div> 
+              <div class="form-group"> 
+                <label for="section">Section</label> 
+                <input type="text" class="form-control" name="section" id="section" placeholder="Enter section"> 
+              </div> 
+              <div class="form-group"> 
+                <label for="description">Description</label> 
+                <textarea class="form-control" id="description" rows="3" name="description" placeholder="Enter description"></textarea> 
+              </div> 
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
+              <button type="submit" class="btn btn-primary">Create</button> 
+            </form> 
+          </div> 
+          <!-- Join Class Tab --> 
+           <div class="tab-pane fade" id="join-class" role="tabpanel" aria-labelledby="join-class-tab"> 
+            <form class="col-6 mx-auto" method="post" enctype="multipart/form-data"> 
+              {% csrf_token %}
+              <div class="form-group"> 
+                <label for="classCode">Class Code</label> 
+                <input type="text" class="form-control" name="class_code" id="classCode" placeholder="Enter class code"> 
+              </div> 
+              <div class="form-group"> 
+                <label for="studentName">Student Name</label> 
+                <input type="text" class="form-control" id="studentName" name="student_name" placeholder="Enter your name"> 
+              </div> 
+              <div class="form-group"> 
+                <label for="studentID">Student ID</label> 
+                <input type="text" class="form-control" name="student_id" id="studentID" placeholder="Enter your student ID"> 
+              </div> 
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
+              <button type="submit" class="btn btn-primary">Join</button> 
+            </form> 
+          </div> 
+        </div> 
+      </div>  
+    </div> 
+  </div> 
+</div>
+
+
+  
 
   <!--Container Main end-->
   
@@ -121,6 +204,8 @@
             padding-left: calc(var(--nav-width) + 188px);
         }
     }
+    
+    
 </style>
 
 {% endblock %}

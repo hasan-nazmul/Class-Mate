@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% block navigation %}
+{% endblock %}
 
 {% block start %}
 
 <div class="container mt-5">
-        <h1 class="text-center mb-4">Class Management</h1>
+        <a href="/home/">< back to home</a>
+        <hr>
         <div class="btn-group d-flex mb-4" role="group">
             <button id="toggleCreate" class="btn btn-primary w-50">Create Class</button>
             <button id="toggleJoin" class="btn btn-outline-primary w-50">Join Class</button>
@@ -11,43 +14,67 @@
 
         <!-- Create Class Form -->
         <div id="createForm" class="card p-4">
-            <h3>Create Class</h3>
-            <form>
+            {% if messages  %}
+            {% for message in messages %}
+              {% if message.tags %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+              {% else %}
+                <div class="alert alert-primary" role="alert">
+                  {{ message }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="mb-3">
                     <label for="className" class="form-label">Class Name</label>
-                    <input type="text" class="form-control" id="className" placeholder="Enter class name" required>
+                    <input type="text" name="class_name" class="form-control" id="className" placeholder="Enter class name" required>
                 </div>
                 <div class="mb-3">
                     <label for="subjectName" class="form-label">Subject Name</label>
-                    <input type="text" class="form-control" id="subjectName" placeholder="Enter subject name" required>
+                    <input type="text" name="subject" class="form-control" id="subjectName" placeholder="Enter subject name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="subjectName" class="form-label">Section</label>
+                    <input type="text" name="section" class="form-control" id="subjectName" placeholder="Enter section" required>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" rows="3" placeholder="Enter class description"></textarea>
+                    <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter class description"></textarea>
                 </div>
-                <button type="submit" class="btn btn-success">Create Class</button>
-                <button type="button" class="btn btn-secondary" onclick="resetForm('createForm')">Cancel</button>
+                <div class="mb-3 d-flex flex-row align-items-baseline">
+
+                    <button type="submit" class="btn btn-block btn-success w-50 mr-1">Create Class</button>
+                    <button type="button" class="btn btn-block btn-secondary w-50 ml-1" onclick="resetForm('createForm')">Cancel</button>
+                </div>
             </form>
         </div>
 
         <!-- Join Class Form -->
         <div id="joinForm" class="card p-4 d-none">
-            <h3>Join Class</h3>
-            <form>
+            
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="mb-3">
                     <label for="classCode" class="form-label">Class Code</label>
-                    <input type="text" class="form-control" id="classCode" placeholder="Enter class code" required>
+                    <input type="text" name="class_code" class="form-control" id="classCode" placeholder="Enter class code" required>
                 </div>
                 <div class="mb-3">
                     <label for="studentName" class="form-label">Your Name</label>
-                    <input type="text" class="form-control" id="studentName" placeholder="Enter your name" required>
+                    <input type="text" name="student_name" class="form-control" id="studentName" placeholder="Enter your name" required>
                 </div>
                 <div class="mb-3">
                     <label for="studentId" class="form-label">Your ID</label>
-                    <input type="text" class="form-control" id="studentId" placeholder="Enter your ID" required>
+                    <input type="text" name="student_id" class="form-control" id="studentId" placeholder="Enter your ID" required>
                 </div>
-                <button type="submit" class="btn btn-success">Join Class</button>
-                <button type="button" class="btn btn-secondary" onclick="resetForm('joinForm')">Cancel</button>
+                <div class="mb-3 d-flex flex-row align-items-baseline">
+
+                    <button type="submit" class="btn btn-block btn-success w-50 mr-1">Join Class</button>
+                    <button type="button" class="btn btn-block btn-secondary w-50 ml-1" onclick="resetForm('createForm')">Cancel</button>
+                </div>
             </form>
         </div>
     </div>
@@ -81,4 +108,7 @@
             form.reset();
         }
     </script>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

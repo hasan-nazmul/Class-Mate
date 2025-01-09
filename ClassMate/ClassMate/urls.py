@@ -30,6 +30,7 @@ urlpatterns = [
     path('logout/', logout_page, name='logout_page'),
     path('signup/', signup_page, name='signup_page'),
     path('home/', home, name='home'),
+    path('createorjoinclassroom/', createorjoinclassroom,name='createorjoinclassroom'),
     # path('classroom-list/', classroom_list, name='classroom_list'),
     # path('classroom-detail/<str:class_id>', classroom_detail, name='classroom_detail'),
     # path('classroom/<class_id>/', classroom, name='classroom'),
