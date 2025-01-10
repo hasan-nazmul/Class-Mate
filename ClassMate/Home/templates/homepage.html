@@ -73,7 +73,7 @@
             />
           {% endif %}
         <div class="card-img-overlay d-flex flex-column justify-content-end">
-          <h5 class="card-title"><a href="#" class="text-decoration-none text-white">{{ classroom.class_name }}</a></h5>
+          <h5 class="card-title"><a href="{% url 'classroom' classroom.class_id %}" class="text-decoration-none text-white">{{ classroom.class_name }}</a></h5>
           <p class="card-text">{{ classroom.section }}</p>
           <p class="card-text mb-0">
             {{ classroom.instructor.first_name }}&nbsp;{{ classroom.instructor.last_name }}

@@ -19,22 +19,22 @@ import timeit
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 def classroom_list(req):
-    if not cache.has_key('classrooms'):
+    if not cache.has_key('classroom:*'):
         ClassroomDBInitializer(req.user)
-    return cache.get('classrooms')
+    return cache.keys('classroom:*')
 
 
-def add_to_cash(req, classroom):
-    classrooms = classroom_list(req)
-    classrooms |= Classroom.objects.filter(class_id=classroom.class_id)
-    cache.set('classrooms', classrooms)
+def add_to_cash(classroom):
+    cache.set(f'classroom:{classroom.class_id}', classroom)
 
 
 # Create your views here.
 @login_required(login_url='/login/')
 def home(req):
-    classrooms = classroom_list(req)
-    
+    classroom_keys = classroom_list(req)
+    classrooms = []
+    for key in classroom_keys:
+        classrooms.append(cache.get(key))
     return render(req, 'homepage.html', context={'classrooms': classrooms})
 
 def createorjoinclassroom(req):
@@ -60,12 +60,14 @@ def createorjoinclassroom(req):
                     student_name += ' ' + req.user.last_name
 
             if classroom:
-                enrollment = enrollment.objects.create(
-                    enrolled_class = classroom[0],
-                    student = req.user,
-                    enrolled_name = student_name,
-                    enrolled_id = student_id
-                )
+                if not classroom[0].enroll_student(req.user):
+                    messages.warning(req, "You've already enrolled in this class")
+                else:
+                    messages.success(req, "Enrollment was successful!!!")
+                    add_to_cash(classroom[0])
+                
+                return redirect('/createorjoinclassroom/')
+
 
         else:
             class_name = data.get('class_name')
@@ -81,7 +83,7 @@ def createorjoinclassroom(req):
                 description = description
             )
 
-            add_to_cash(req, new_classroom)
+            add_to_cash(new_classroom)
         
         return redirect('/home/')
     return render(req, 'addjoinclass.html')

@@ -19,4 +19,5 @@ def ClassroomDBInitializer(user):
     classroom_queryset = Classroom.objects.filter(
         Q(instructor=user) | Q(students=user)
     )
-    cache.set('classrooms', classroom_queryset)
+    for classroom in classroom_queryset:
+        cache.set(f'classroom:{classroom.class_id}', classroom)

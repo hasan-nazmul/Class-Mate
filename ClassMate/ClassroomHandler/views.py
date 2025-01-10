@@ -1,33 +1,36 @@
-# from django.shortcuts import render, redirect
-# from django.http import HttpResponse
-# from .models import *
-# from django.core.cache import cache
-
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .models import *
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from ClassroomHandler.serializers import *
+from django.core.exceptions import ValidationError
+from rest_framework.parsers import JSONParser
+from django.contrib import messages
 # # Create your views here.
 
-# def classroom(req, class_id):
-#     current_classroom = Teaching.objects.filter(teaching_class__class_id = class_id)
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
-#     if not current_classroom:
-#         current_classroom = Enrolled.objects.filter(enrolled_class__enrolled_class__class_id = class_id)[0].enrolled_class.enrolled_class
+def classroom(req, class_id):
+    current_classroom = cache.get(f'classroom:{class_id}')
 
-#     else:
-#         current_classroom = current_classroom[0].teaching_class
+    if not current_classroom:
+        current_classroom = Classroom.objects.filter(class_id = class_id)[0]
+        cache.set(f'classroom:{class_id}', current_classroom)
     
-#     if req.method == 'POST':
-#         image = req.FILES.get('cover_image')
+    # if req.method == 'POST':
+    #     image = req.FILES.get('cover_image')
 
-#         if image:
-#             current_classroom.cover_image = image
-#             current_classroom.save()
+    #     if image:
+    #         current_classroom.cover_image = image
+    #         current_classroom.save()
+    #         cache.set(f'classroom:{class_id}', current_classroom)
 
-#         return redirect(f'/classroom/{class_id}')
-    
-#     current_classroom = CurrentClassroom.objects.create(
-#         current_classroom = current_classroom
-#     )
+    #     return redirect(f'/classroom/{class_id}')
 
-#     return render(req, 'classroom.html', context={'classroom': current_classroom, 'navclassroom': True})
+    return render(req, 'classroom.html', context={'classroom': current_classroom})
 
 # def peoples(req, class_id):
 #     current_classroom = CurrentClassroom.objects.all()[0]
