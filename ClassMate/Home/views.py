@@ -19,9 +19,11 @@ import timeit
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 def classroom_list(req):
-    if not cache.has_key('classroom:*'):
+    classroom_keys = cache.keys('classroom:*')
+
+    if len(classroom_keys) < req.user.classroom_count:
         ClassroomDBInitializer(req.user)
-    return cache.keys('classroom:*')
+    return classroom_keys
 
 
 def add_to_cash(classroom):
@@ -64,6 +66,8 @@ def createorjoinclassroom(req):
                     messages.warning(req, "You've already enrolled in this class")
                 else:
                     messages.success(req, "Enrollment was successful!!!")
+                    req.user.classroom_count += 1
+                    req.user.save()
                     add_to_cash(classroom[0])
                 
                 return redirect('/createorjoinclassroom/')
@@ -83,6 +87,8 @@ def createorjoinclassroom(req):
                 description = description
             )
 
+            req.user.classroom_count += 1
+            req.user.save()
             add_to_cash(new_classroom)
         
         return redirect('/home/')

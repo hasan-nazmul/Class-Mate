@@ -11,9 +11,7 @@ from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from django.http import HttpResponse, JsonResponse
 
-
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
-
 
 def ClassroomDBInitializer(user):
     classroom_queryset = Classroom.objects.filter(

@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     username = models.CharField(max_length=255, unique=True)
     profile_image = models.ImageField(upload_to='user_profile_images/', blank=True, null=True)
     email = models.EmailField(unique=True)
+    classroom_count = models.IntegerField(default=0)
 
 
     class Meta:

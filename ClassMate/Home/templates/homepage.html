@@ -59,19 +59,11 @@
 
       <div class="card text-white mr-3 mb-3" style="width: 300px; height: 200px;">
         <div class="position-relative">
-          {% if classroom.cover_image %}
-            <img src="{{classroom.cover_image}}"
-              class="card-img"
-              style="width: 300px; height: 200px"
-              alt="Class Cover"
-            />
-          {% else %}
             <img src="/media/classroom_covers/default-cover.jpg"
               class="card-img"
               style="width: 300px; height: 200px"
               alt="Class Cover"
             />
-          {% endif %}
         <div class="card-img-overlay d-flex flex-column justify-content-end">
           <h5 class="card-title"><a href="{% url 'classroom' classroom.class_id %}" class="text-decoration-none text-white">{{ classroom.class_name }}</a></h5>
           <p class="card-text">{{ classroom.section }}</p>

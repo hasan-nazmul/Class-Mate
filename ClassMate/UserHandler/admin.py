@@ -5,7 +5,7 @@ from .models import CustomUser
 
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    list_display = ('username', 'email', 'first_name', 'last_name')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'classroom_count')
     search_fields = ('username', 'email')
     ordering = ('username',)
 

@@ -89,5 +89,6 @@ def signup_page(req):
 
 @login_required(login_url='/login/')
 def logout_page(req):
+    cache.clear()
     logout(req)
     return redirect('/')
