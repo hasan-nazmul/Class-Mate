@@ -37,6 +37,9 @@ def home(req):
     classrooms = []
     for key in classroom_keys:
         classrooms.append(cache.get(key))
+
+    for classroom in classrooms:
+        print(classroom.cover_image)
     return render(req, 'homepage.html', context={'classrooms': classrooms})
 
 def createorjoinclassroom(req):
@@ -93,3 +96,7 @@ def createorjoinclassroom(req):
         
         return redirect('/home/')
     return render(req, 'addjoinclass.html')
+
+
+def test(req):
+    return render(req, 'exampaper.html')

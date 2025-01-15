@@ -2,29 +2,50 @@
 {% block title %} {{classroom.class_name}} {% endblock %} 
 
 {% block navigation %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <a class="navbar-brand" href="#">{{classroom.class_name}}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/home/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'examroom' classroom.class_id %}">Examroom</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Peoples</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 {% endblock %}
 
 {% block start %}
 
-<nav class="bg-dark navbar-dark">
-  <div class="container">
-    <a href="" class="navbar-brand">{{classroom.class_name}}</a>
-  </div>
-  </nav>
    <section id="header" class="jumbotron text-center">
      <h1 class="display-3">{{classroom.subject}}</h1>
      <p class="lead">{{classroom.description}}</p>
-     <div class="container d-flex flex-column w-25">
 
-       <input
-         name="cover_image"
-         type="file"
-         class="form-control-file"
-         id="cover_image"
-         accept="image/*"
-       />
-       <button type="button" class="btn btn-primary btn-sm">Submit</button>
-     </div>
+      <form class="container d-flex flex-column w-25" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if request.user == classroom.instructor %}
+        <input
+          name="cover_image"
+          type="file"
+          class="form-control-file"
+          name="cover_image"
+          id="cover_image"
+          accept="image/*"
+        />
+        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+        {% endif %}
+      </form>
+
+
 
 </section>
   
@@ -70,8 +91,8 @@
 
 <style>
   #header {
-  background: url(/media/classroom_covers/default-cover.jpg) center center / cover no-repeat ;
-}
+    background: url(/media/{{classroom.cover_image}}) center center / cover no-repeat ;
+  }
 </style>
 
 

@@ -1,11 +1,16 @@
-<!-- {% extends "base.html" %}
+{% extends "base.html" %}
 {% block title %}
-    Examroom
+    Question Paper
 {% endblock %}
+
+{% block navigation %}
+{% endblock %}
+
 {% block start %}
 
 <div class="container-sm mt-5">
-
+    <a href="/home/">< back to home</a>
+    <hr>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -45,4 +50,4 @@
 </div>
 
 
-{% endblock %} -->
+{% endblock %}

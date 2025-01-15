@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}
+    Your Submission
+{% endblock %}
+
+{% block navigation %}
+
+{% endblock %}
+
+{% block start %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Card</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="card" style="width: 40rem;">
+            <img src="/media/classroom_covers/wallpaperflare.com_wallpaper_3.jpg" class="card-img-top" alt="Question Image">
+            <form class="card-body">
+                <h5 class="card-title">Question</h5>
+                <p class="card-text">What is the capital of France?</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <input type="radio" name="options" id="option1">
+                        <label for="option1">Berlin</label>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="radio" name="options" id="option2">
+                        <label for="option2">Madrid</label>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="radio" name="options" id="option3">
+                        <label for="option3">Paris</label>
+                    </li>
+                    <li class="list-group-item">
+                        <input type="radio" name="options" id="option4">
+                        <label for="option4">Rome</label>
+                    </li>
+                </ul>
+                <button type="submit" class="btn btn-primary mt-3">Next Question</button>
+                <button type="submit" value="abort" class="btn btn-danger mt-3">End Test</button>
+            </form>
+        </div>
+    </div>
+
+    
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

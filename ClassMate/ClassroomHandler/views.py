@@ -19,26 +19,17 @@ def classroom(req, class_id):
     if not current_classroom:
         current_classroom = Classroom.objects.filter(class_id = class_id)[0]
         cache.set(f'classroom:{class_id}', current_classroom)
-    
-    # if req.method == 'POST':
-    #     image = req.FILES.get('cover_image')
 
-    #     if image:
-    #         current_classroom.cover_image = image
-    #         current_classroom.save()
-    #         cache.set(f'classroom:{class_id}', current_classroom)
+    if req.method == 'POST':
+        image = req.FILES.get('cover_image')
 
-    #     return redirect(f'/classroom/{class_id}')
+        if image:
+            current_classroom = Classroom.objects.filter(class_id = class_id)[0]
+            current_classroom.cover_image = image
+            current_classroom.save()
+            cache.set(f'classroom:{class_id}', current_classroom)
+
+        return redirect(f'/classroom/{class_id}')
 
     return render(req, 'classroom.html', context={'classroom': current_classroom})
 
-# def peoples(req, class_id):
-#     current_classroom = CurrentClassroom.objects.all()[0]
-
-#     teacher = current_classroom.current_classroom.teacher
-
-#     students = Enrollments.objects.filter(
-#         enrolled_class = current_classroom.current_classroom
-#     )
-
-#     return render(req, 'peoples.html', context={'classroom': current_classroom, 'teacher': teacher, 'students': students, 'navclassroom': True})
