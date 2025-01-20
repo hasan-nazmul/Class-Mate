@@ -30,3 +30,10 @@ class Classroom(models.Model):
         verbose_name = 'Classroom' 
         verbose_name_plural = 'Classrooms' 
         db_table = 'classroom_table' 
+
+
+class Announcement(models.Model):
+    announcement_id = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
+    classroom_id = models.ForeignKey(Classroom, on_delete=models.CASCADE, related_name='announcement')
+    announcement_text = models.CharField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)

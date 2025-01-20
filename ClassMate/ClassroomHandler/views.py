@@ -9,7 +9,7 @@ from ClassroomHandler.serializers import *
 from django.core.exceptions import ValidationError
 from rest_framework.parsers import JSONParser
 from django.contrib import messages
-# # Create your views here.
+# Create your views here.
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
@@ -20,6 +20,10 @@ def classroom(req, class_id):
         current_classroom = Classroom.objects.filter(class_id = class_id)[0]
         cache.set(f'classroom:{class_id}', current_classroom)
 
+    announcement_queryset = Announcement.objects.filter(
+        classroom_id = current_classroom
+    )
+
     if req.method == 'POST':
         image = req.FILES.get('cover_image')
 
@@ -29,7 +33,15 @@ def classroom(req, class_id):
             current_classroom.save()
             cache.set(f'classroom:{class_id}', current_classroom)
 
+        announcement_text = req.POST.get('announcement_text')
+
+        if announcement_text:
+            Announcement.objects.create(
+                classroom_id = current_classroom,
+                announcement_text = announcement_text
+            )
+
         return redirect(f'/classroom/{class_id}')
 
-    return render(req, 'classroom.html', context={'classroom': current_classroom})
+    return render(req, 'classroom.html', context={'classroom': current_classroom, 'announcements': announcement_queryset})
 
